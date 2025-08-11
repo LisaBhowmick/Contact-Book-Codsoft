@@ -1,2 +1,2 @@
-# codsoft-Contact_Book
+# Contact-Book-Codsoft
 a python contact-book with gui
