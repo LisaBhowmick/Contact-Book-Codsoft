@@ -6,7 +6,7 @@ import os
 
 DB_FILE = os.path.join(os.path.dirname(__file__), "contacts.db")
 
-# Database setup
+# Database
 def setup_database():
     with sqlite3.connect(DB_FILE) as conn:
         cursor = conn.cursor()
@@ -80,11 +80,10 @@ def get_selected_contact(event):
 
 
 root = tk.Tk()
-root.title("🌈 Contact Book")
-root.geometry("480x500")
-root.config(bg="#FFDFAF")
+root.title("Contact Book")
+root.geometry("420x520")
+root.config(bg="#FFDFAF")  # Light playful background
 
-# Style
 style = ttk.Style()
 style.theme_use("default")
 style.configure("TLabel", background="#FFDFAF", foreground="#444444", font=("Comic Sans MS", 11, "bold"))
@@ -97,40 +96,31 @@ style.configure("CartoonButton.TButton",
                 relief="flat")
 style.map("CartoonButton.TButton", background=[("active", "#FF6F91")])
 
-# Top form frame
-form_frame = tk.Frame(root, bg="#FFF4D6", bd=3, relief="ridge", padx=10, pady=10)
-form_frame.pack(pady=10, padx=10, fill="x")
+frame = tk.Frame(root, bg="#FFF4D6", bd=3, relief="ridge", padx=20, pady=20)
+frame.pack(pady=20, padx=20, fill="both", expand=True)
 
-name_label = ttk.Label(form_frame, text="Name ✏️:")
-name_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
-name_entry = ttk.Entry(form_frame, width=20)
-name_entry.grid(row=0, column=1, padx=5, pady=5)
+name_label = ttk.Label(frame, text="Name ✏️:")
+name_label.pack(anchor="w", pady=(0, 4))
+name_entry = ttk.Entry(frame, width=40)
+name_entry.pack(pady=(0, 10))
 
-phone_label = ttk.Label(form_frame, text="Phone 📞:")
-phone_label.grid(row=0, column=2, padx=5, pady=5, sticky="w")
-phone_entry = ttk.Entry(form_frame, width=20)
-phone_entry.grid(row=0, column=3, padx=5, pady=5)
+phone_label = ttk.Label(frame, text="Phone 📞:")
+phone_label.pack(anchor="w", pady=(0, 4))
+phone_entry = ttk.Entry(frame, width=40)
+phone_entry.pack(pady=(0, 10))
 
-# Button row
-button_frame = tk.Frame(root, bg="#FFDFAF")
-button_frame.pack(pady=5)
+add_button = ttk.Button(frame, text="➕ Add Contact", command=add_contact, style="CartoonButton.TButton")
+add_button.pack(fill="x", pady=(5, 5))
 
-add_button = ttk.Button(button_frame, text="➕ Add", command=add_contact, style="CartoonButton.TButton")
-add_button.grid(row=0, column=0, padx=5)
+delete_button = ttk.Button(frame, text="❌ Delete Contact", command=delete_contact, style="CartoonButton.TButton")
+delete_button.pack(fill="x", pady=(5, 5))
 
-delete_button = ttk.Button(button_frame, text="❌ Delete", command=delete_contact, style="CartoonButton.TButton")
-delete_button.grid(row=0, column=1, padx=5)
+clear_button = ttk.Button(frame, text="🧹 Clear Contacts", command=clear_contacts, style="CartoonButton.TButton")
+clear_button.pack(fill="x", pady=(5, 10))
 
-clear_button = ttk.Button(button_frame, text="🧹 Clear", command=clear_contacts, style="CartoonButton.TButton")
-clear_button.grid(row=0, column=2, padx=5)
-
-# Contact list frame
-list_frame = tk.LabelFrame(root, text="📜 Contact List", bg="#FFDFAF", font=("Comic Sans MS", 11, "bold"), fg="#444444")
-list_frame.pack(padx=10, pady=10, fill="both", expand=True)
-
-contact_list = tk.Listbox(list_frame, height=12, bg="#FFF9E6", fg="#444444", font=("Comic Sans MS", 10),
+contact_list = tk.Listbox(frame, height=10, bg="#FFF9E6", fg="#444444", font=("Comic Sans MS", 10),
                           selectbackground="#FF8AAE", selectforeground="#FFFFFF", bd=2, relief="groove", highlightthickness=0)
-contact_list.pack(fill="both", expand=True, padx=10, pady=10)
+contact_list.pack(fill="both", expand=True, pady=(10, 0))
 
 contact_list.bind('<<ListboxSelect>>', get_selected_contact)
 
